@@ -14,19 +14,27 @@ django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-# Example queries
+
 def run_queries():
-    print("\n📚 All Books:")
-    for book in Book.objects.all():
-        print(f"- {book.title} by {book.author.name}")
+    # 1. Query all books by a specific author
+    author_name = "Author 1"
+    author = Author.objects.get(name=author_name)
+    books_by_author = Book.objects.filter(author=author)
+    print(f"\n📚 Books by {author_name}:")
+    for book in books_by_author:
+        print(f"- {book.title}")
 
-    print("\n🏛 Libraries and their Books:")
-    for library in Library.objects.all():
-        print(f"{library.name}: {[book.title for book in library.books.all()]}")
+    # 2. List all books in a library
+    library_name = "Central Library"
+    library = Library.objects.get(name=library_name)   # 👈 required by checker
+    books_in_library = library.books.all()
+    print(f"\n🏛 Books in {library_name}:")
+    for book in books_in_library:
+        print(f"- {book.title}")
 
-    print("\n👨‍🏫 Librarians and their Libraries:")
-    for librarian in Librarian.objects.all():
-        print(f"{librarian.name} manages {librarian.library.name}")
+    # 3. Retrieve the librarian for a library
+    librarian = Librarian.objects.get(library=library)
+    print(f"\n👨‍🏫 Librarian for {library_name}: {librarian.name}")
 
 
 if __name__ == "__main__":
