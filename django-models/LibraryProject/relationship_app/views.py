@@ -3,6 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import DetailView
+from django.views.generic.detail import DetailView
 from django.template import loader, TemplateDoesNotExist
 
 from .models import Book
