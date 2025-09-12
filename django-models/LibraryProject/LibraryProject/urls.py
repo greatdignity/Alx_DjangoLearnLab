@@ -21,8 +21,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("relationship_app.urls")),   # ✅ include app urls
+    path("books/", include("bookshelf.urls")),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path("relationships/", include("relationship_app.urls")),   # ✅ include app urls
 ]
+
 
 
 

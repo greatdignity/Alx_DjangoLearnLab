@@ -9,6 +9,6 @@ from .models import Book
 # Customized admin class
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ("title", "author", "publication_year")  # show these in list view
-    search_fields = ("title", "author")                     # add search bar
-    list_filter = ("publication_year", "author")            # add filters
+    list_display = ('title', 'author', 'published_date')
+    list_filter = ('published_date',)
+
