@@ -9,8 +9,6 @@ urlpatterns = [
     path("library/<int:pk>/", LibraryDetailView.as_view(), name="library_detail"),  # class-based view
 ]
 
-
-from django.urls import path
 from .views import list_books, LibraryDetailView, register_view, login_view, logout_view
 
 urlpatterns = [
@@ -27,9 +25,6 @@ urlpatterns = [
 ]
 
 
-
-
-from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -38,11 +33,6 @@ urlpatterns = [
     path("member-view/", views.member_view, name="member_view"),
 ]
 
-
-
-# relationship_app/urls.py
-from django.urls import path
-from . import views
 
 urlpatterns = [
     # existing patterns...
