@@ -39,4 +39,9 @@ def delete_book(request, pk):
     return render(request, "bookshelf/delete_book.html", {"book": book})
 
 
+from django.shortcuts import render
+from .models import Book
 
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, "bookshelf/book_list.html", {"books": books})
