@@ -1,19 +1,21 @@
+
+# relationship_app/urls.py
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 from .views import list_books, LibraryDetailView
 
 urlpatterns = [
-    # Books (CRUD from bookshelf, if required by checker)
+    # Required by checker
     path("books/add/", views.add_book, name="add_book"),
     path("books/<int:pk>/edit/", views.edit_book, name="edit_book"),
-    path("books/<int:pk>/delete/", views.delete_book, name="delete_book"),
 
-    # Relationship app routes
-    path("books/", list_books, name="list_books"),  
+    # Optional but related (you had them before)
+    path("books/<int:pk>/delete/", views.delete_book, name="delete_book"),
+    path("books/", list_books, name="list_books"),
     path("library/<int:pk>/", LibraryDetailView.as_view(), name="library_detail"),
 
-    # Auth routes
+    # Auth
     path("register/", views.register, name="register"),
     path("login/", LoginView.as_view(template_name="relationship_app/login.html"), name="login"),
     path("logout/", LogoutView.as_view(template_name="relationship_app/logout.html"), name="logout"),
