@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import Group
 
 
 class Author(models.Model):
@@ -19,7 +20,6 @@ class Book(models.Model):
         return self.title
 
     class Meta:
-        # custom permissions requested by the task
         permissions = (
             ("can_add_book", "Can add book"),
             ("can_change_book", "Can change book"),
@@ -53,43 +53,21 @@ class UserProfile(models.Model):
         ('Librarian', 'Librarian'),
         ('Member', 'Member'),
     ]
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='Member')
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
 
 
-
-
-
-from django.contrib.auth.models import User, Group
-from django.dispatch import receiver
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=50, blank=True, null=True)  # so add_user_to_group works
-    # add more fields here (bio, etc.)
-
-    def __str__(self):
-        return self.user.username
-
-
-# Create UserProfile when User is created
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
+# Automatically create/save UserProfile for each new user
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-
-
-# Save UserProfile when User is saved
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    try:
+    else:
         instance.userprofile.save()
-    except UserProfile.DoesNotExist:
-        UserProfile.objects.create(user=instance)
 
 
 # Add User to Group based on role
