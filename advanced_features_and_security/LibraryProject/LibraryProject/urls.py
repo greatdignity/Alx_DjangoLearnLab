@@ -15,11 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin # pyright: ignore[reportMissingModuleSource]
-from django.urls import path # pyright: ignore[reportMissingModuleSource]
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+from django.urls import path, include # pyright: ignore[reportMissingModuleSource]
 
 
 from django.conf import settings # pyright: ignore[reportMissingModuleSource]
@@ -27,7 +23,9 @@ from django.conf.urls.static import static # pyright: ignore[reportMissingModule
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # ... your urls
+    path('', include('bookshelf.urls')),
+    path('', include('relationship_app.urls'))
+        # ... your urls
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,16 @@
+{% for book in books %}
+  <tr>
+    <td>{{ book.title }}</td>
+    <td>{{ book.author }}</td>
+    <td>
+      {% if perms.relationship_app.change_book %}
+        <a href="{% url 'book_edit' book.pk %}">Edit</a>
+      {% endif %}
+      
+      {% if perms.relationship_app.delete_book %}
+        <a href="{% url 'book_delete' book.pk %}">Delete</a>
+      {% endif %}
+    </td>
+  </tr>
+{% endfor %}
+

@@ -1,26 +1,28 @@
 from django.db import models
+from django.conf import settings
 
+# relationship_app/models.py
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=100)
+    author = models.CharField(max_length=200)
     published_date = models.DateField()
 
     class Meta:
         permissions = [
-            ("can_add_book", "Can add a new book"),
-            ("can_edit_book", "Can edit a book"),
-            ("can_delete_book", "Can delete a book"),
+            ("can_view", "Can view book"),
+            ("can_create", "Can create book"),
+            ("can_edit", "Can edit book"),
+            ("can_delete", "Can delete book"),
         ]
 
+        
     def __str__(self):
         return self.title
 
 
-from django.conf import settings  # best practice
-
 class Relationship(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  # points to CustomUser
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
     friend = models.ForeignKey(
@@ -32,3 +34,5 @@ class Relationship(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.friend} ({self.status})"
+
+# Custom permissions defined for Book model to manage access control.

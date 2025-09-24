@@ -1,3 +1,12 @@
+# LibraryProject/bookshelf/views.py
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Bookshelf app is working!")
+
+
+
+
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
 
@@ -5,3 +14,5 @@ from django.shortcuts import render
 def add_book(request):
     # your code to handle adding a book
     return render(request, 'bookshelf/add_book.html')
+
+

@@ -3,9 +3,11 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    # show custom fields in admin
+
+    # show custom fields in admin form
     fieldsets = UserAdmin.fieldsets + (
         (None, {"fields": ("date_of_birth", "profile_photo")}),
     )
@@ -13,5 +15,6 @@ class CustomUserAdmin(UserAdmin):
         (None, {"fields": ("date_of_birth", "profile_photo")}),
     )
 
-
-admin.site.register(CustomUser, CustomUserAdmin)
+    # list view in admin
+    list_display = ("username", "email", "is_staff", "is_active")
+    list_filter = ("is_staff", "is_active")
