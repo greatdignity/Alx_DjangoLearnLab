@@ -18,3 +18,8 @@ class CustomUserAdmin(UserAdmin):
     # list view in admin
     list_display = ("username", "email", "is_staff", "is_active")
     list_filter = ("is_staff", "is_active")
+
+from .models import Book
+
+admin.site.register(Book)
+

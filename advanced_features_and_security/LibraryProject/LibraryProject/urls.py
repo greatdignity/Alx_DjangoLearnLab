@@ -24,8 +24,7 @@ from django.conf.urls.static import static # pyright: ignore[reportMissingModule
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('bookshelf.urls')),
-    path('', include('relationship_app.urls'))
-        # ... your urls
+            # ... your urls
 ]
 
 if settings.DEBUG:
